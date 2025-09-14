@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronología de Conflictos en la Serranía del Perijá</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #334155;
+            overflow-x: hidden;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding: 50px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background-color: #cbd5e1;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            cursor: pointer;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            text-align: left;
+        }
+
+        .timeline-year {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            position: relative;
+            z-index: 10;
+        }
+
+        .timeline-year::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background-color: #e2e8f0;
+            border-radius: 50%;
+            z-index: -1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            background-color: #ffffff;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .timeline-icon {
+            font-size: 1.5rem;
+            color: #ffffff;
+            background-color: #ef4444;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            z-index: 10;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .timeline-item.active .timeline-icon {
+            transform: translate(-50%, -50%) rotate(180deg);
+        }
+
+        .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .details p {
+            margin-top: 1rem;
+            color: #64748b;
+        }
+
+        .timeline-item.active .details {
+            max-height: 500px; /* Adjust as needed */
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                margin-bottom: 40px;
+                padding-left: 60px;
+                text-align: left !important;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .timeline-year {
+                margin-bottom: 20px;
+                font-size: 2rem;
+            }
+
+            .timeline-year::before {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .timeline-icon {
+                top: 0;
+                left: 20px;
+                transform: translate(-50%, 0);
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 antialiased">
+    <div class="container mx-auto px-4 py-12">
+        <header class="text-center mb-16">
+            <h1 class="text-5xl font-extrabold text-blue-900 mb-4 animate-fade-in-down">
+                Cronología de Conflictos en la Serranía del Perijá
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto animate-fade-in-up">
+                Una visualización interactiva de los eventos clave que han marcado los desafíos territoriales y sociales en la región.
+            </p>
+        </header>
+
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+
+            <!-- Evento 2014 -->
+            <div class="timeline-item" data-year="2014">
+                <div class="timeline-content">
+                    <h3 class="text-2xl font-bold text-blue-700">Conflicto Territorial Wiwa y Yukpa</h3>
+                    <p class="mt-2 text-gray-600">La tensión se intensifica en el Resguardo Campo Alegre. El pueblo Wiwa amplía su territorio, lo que los Yukpa ven como una grave afectación a sus tierras y sitios sagrados. Se inicia un ciclo de reuniones que no logran resolver el conflicto.</p>
+                    <div class="details">
+                        <p>Este conflicto se centra en el Resguardo Campo Alegre en la Serranía del Perijá, un territorio que el pueblo indígena Yukpa reclama como ancestral. A principios de la década de 1990, el antiguo INCORA (hoy Agencia Nacional de Tierras) tituló 208 hectáreas a siete familias del pueblo indígena Wiwa en esta zona. Aunque inicialmente se establecieron acuerdos de convivencia, estos se rompieron. La situación escaló cuando el pueblo Wiwa amplió su presencia, pasando de 7 a 150 familias y de 208 a 1,300 hectáreas, adquiriendo más terrenos por su cuenta. La tensión se intensificó debido a que los Wiwa realizaron rituales espirituales en sitios sagrados para los Yukpa, lo que estos últimos percibieron como una afectación grave a su territorio y a su equilibrio espiritual. Lideres del pueblo Yukpa, manifestó que el problema principal no es la tierra, sino el aspecto espiritual, por lo que su pueblo exige la reubicación de las familias Wiwa a su territorio ancestral. </p>
+                    </div>
+                </div>
+                <div class="timeline-year">2014</div>
+                <div class="timeline-icon"><i class="fas fa-handshake-slash"></i></div>
+            </div>
+
+            <!-- Evento 2015 -->
+            <div class="timeline-item" data-year="2015">
+                <div class="timeline-content">
+                    <h3 class="text-2xl font-bold text-blue-700">Crisis de Reubicación Wiwa</h3>
+                    <p class="mt-2 text-gray-600">Los Yukpa amenazan con el desplazamiento forzado de las familias Wiwa. El INCODER incumple su promesa de reubicación, lo que provoca la fractura de la comunidad Wiwa en dos grupos.</p>
+                    <div class="details">
+                        <p>Desde 2014, se han llevado a cabo múltiples reuniones para resolver la crisis, pero los avances han sido escasos y los compromisos, en gran parte, incumplidos. En una reunión en 2015, los Yukpa exigieron que los Wiwa abandonaran el territorio en un mes. Esta amenaza generó una crisis humanitaria que llevó a la Alcaldía de Becerril y otras entidades a preparar planes de atención para un posible desplazamiento forzado. El INCODER (la entidad responsable en ese momento) propuso la reubicación de las familias Wiwa a predios en La Guajira, Municipio del Molino. Sin embargo, la entidad ha incumplido con su responsabilidad de agilizar la compra de las tierras prometidas para reubicación. Como resultado de la falta de soluciones y los compromisos incumplidos, la comunidad del Resguardo Campo Alegre se ha dividido. Aproximadamente 72 familias Wiwa se trasladaron al municipio de El Molino, en La Guajira, mientras que el resto se quedó en Becerril, en la cabecera municipal. Esta situación ha fracturado la unidad del pueblo Wiwa.</p>
+                    </div>
+                </div>
+                <div class="timeline-year">2015</div>
+                <div class="timeline-icon"><i class="fas fa-map-marked-alt"></i></div>
+            </div>
+
+            <!-- Evento 2016 -->
+            <div class="timeline-item" data-year="2016">
+                <div class="timeline-content">
+                    <h3 class="text-2xl font-bold text-blue-700">Demandas Territoriales y Zonas en Conflicto</h3>
+                    <p class="mt-2 text-gray-600">Los Yukpa envían una carta a organismos internacionales, reclamando toda la Serranía del Perijá. También se oponen a la creación de ZRC y la ubicación de las ZVNT en su territorio, lo que causa nuevos conflictos.</p>
+                    <div class="details">
+                        <p>La Defensoría del Pueblo Regional Cesar, tuvo conocimiento de una carta de las autoridades Yukpa a organismos internacionales, fechada en La Paz, Cesar, donde presenta una serie de demandas que, desde este punto de vista podrían afectar negativamente los derechos de las comunidades campesinas. Reclamación Territorial: El pueblo Yukpa reclama como su "territorio ancestral" la totalidad de la Serranía del Perijá, abarcando varios municipios como Manaure, San Diego, La Paz, Agustín Codazzi, Becerril y La Jagua de Ibirico. Restricciones a Misiones Humanitarias: Proponen restringir o prohibir el ingreso a su territorio ancestral a misiones de entidades como el Sistema de Naciones Unidas (SNU), el Comité Internacional de la Cruz Roja (CICR), la Defensoría del Pueblo (DP) y la Cruz Roja Colombiana (CRC). Otro de los temas Conflictivos es el tema de las Creación de Zonas de Reserva Campesina (ZRC) en el Cesar. Las comunidades indígenas (especialmente el pueblo Yukpa y el Ette Enaka/Chimila) y afrocolombianas se oponen a este proyecto. Zonas Veredales Transitorias de Normalización (ZVNT), estas no podían ubicarse dentro de resguardos indígenas. A pesar de esto, se eligió una ubicación en el municipio de La Paz, Cesar, que se superpone con un resguardo Yukpa.</p>
+                    </div>
+                </div>
+                <div class="timeline-year">2016</div>
+                <div class="timeline-icon"><i class="fas fa-file-alt"></i></div>
+            </div>
+
+            <!-- Evento 2017 -->
+            <div class="timeline-item" data-year="2017">
+                <div class="timeline-content">
+                    <h3 class="text-2xl font-bold text-blue-700">Sentencia T-713: Un Giro Jurídico</h3>
+                    <p class="mt-2 text-gray-600">La Corte Constitucional emite una sentencia clave que reafirma los derechos territoriales de los Yukpa. Se ordena resolver la ampliación de su territorio y realizar consultas previas para los ETCR y las ZRC.</p>
+                    <div class="details">
+                        <p>Este año se emite la sentencia T 713 de 2017, por parte de la Corte Constitucional, providencia que ha generado infinidades de diferencias y conflictos con los campesinos ubicados en la Serranía del Perijá. ETCR de La Paz: Se ordena a la Presidencia de la República (Oficina del Alto Comisionado para la Paz) y al Ministerio del Interior evaluar en un plazo de 4 meses la ubicación del Espacio Territorial de Capacitación y Reincorporación (ETCR) de La Paz, Cesar. Ampliación del Territorio Yukpa: La Agencia Nacional de Tierras (ANT) debe resolver de inmediato y en un plazo máximo de un año las solicitudes pendientes de ampliación, saneamiento y delimitación del territorio ancestral Yukpa. Zonas de Reserva Campesina (ZRC): La ANT y el Ministerio del Interior deben realizar una consulta previa con la comunidad Yukpa en un plazo de 4 meses si se determina que la creación de la Zona de Reserva Campesina del Perijá afecta su territorio. Reserva Forestal de la Motilona: La Agencia Nacional de Tierras y el Ministerio de Ambiente deben atender y tramitar con rapidez las preocupaciones del pueblo Yukpa sobre la solicitud de sustracción de la Zona de Reserva Forestal.</p>
+                    </div>
+                </div>
+                <div class="timeline-year">2017</div>
+                <div class="timeline-icon"><i class="fas fa-balance-scale"></i></div>
+            </div>
+
+            <!-- Evento 2019 -->
+            <div class="timeline-item" data-year="2019">
+                <div class="timeline-content">
+                    <h3 class="text-2xl font-bold text-blue-700">Tragedia y Violencia en El Once</h3>
+                    <p class="mt-2 text-gray-600">Dos niños Yukpa mueren por presunto envenenamiento, lo que desata una violenta reacción de la comunidad contra una finca campesina cercana. La investigación forense no logra determinar la causa de las muertes.</p>
+                    <div class="details">
+                        <p>En 2019, la comunidad yukpa de El Once, en el municipio de Agustín Codazzi, sufrió una tragedia cuando dos niños, Reinaldo y Luisa Fernanda Peñaloza, murieron por presunto envenenamiento. Los niños habrían ingerido un líquido, supuestamente glifosato, pensando que era agua. Este hecho provocó una reacción violenta de la comunidad, que atacó una finca campesina cercana. Acusando al campesino de ser el responsable de la muerte de los menores, los indígenas hirieron y mataron ganado y ovejas, y también agredieron al cuidador de la finca. Debido a los rituales de luto del pueblo yukpa, no se permitió realizar la necropsia a los cuerpos de los niños de inmediato. La Fiscalía, que abrió una investigación, ordenó la exhumación tres meses después. Sin embargo, el Instituto de Medicina Legal no pudo confirmar el envenenamiento debido al avanzado estado de descomposición de los cuerpos. El caso quedó sin resolverse y en la impunidad.</p>
+                    </div>
+                </div>
+                <div class="timeline-year">2019</div>
+                <div class="timeline-icon"><i class="fas fa-biohazard"></i></div>
+            </div>
+
+            <!-- Evento 2022 -->
+            <div class="timeline-item" data-year="2022">
+                <div class="timeline-content">
+                    <h3 class="text-2xl font-bold text-blue-700">Más Muertes por Plaguicida</h3>
+                    <p class="mt-2 text-gray-600">Otros cinco niños Yukpa fallecen en la comunidad de Shospa por envenenamiento con un plaguicida, generando gran conmoción.</p>
+                    <div class="details">
+                        <p>Cinco niños del pueblo indígena Yukpa murieron en la comunidad de Shospa, en el resguardo Iroka. La tragedia ocurrió después de que consumieran chicha de maíz y bollos que, al parecer, contenían plaguicida. El envenenamiento causó su muerte y ha generado una gran conmoción entre las comunidades indígenas y campesinas de la región. Los resultados de medicina legal determinaron que los niños fueron muertos por envenenamiento por plaguicida genérico de conocido como Lorban.</p>
+                    </div>
+                </div>
+                <div class="timeline-year">2022</div>
+                <div class="timeline-icon"><i class="fas fa-skull-crossbones"></i></div>
+            </div>
+
+            <!-- Evento 2024 -->
+            <div class="timeline-item" data-year="2024">
+                <div class="timeline-content">
+                    <h3 class="text-2xl font-bold text-blue-700">Incidente en la "Y"</h3>
+                    <p class="mt-2 text-gray-600">Un grupo de campesinos y dos Yukpa actúan por su cuenta para capturar a presuntos ladrones. Se desmiente la participación de la guardia indígena en el incidente, aclarando la confusión en los medios.</p>
+                    <div class="details">
+                        <p>El 23 de noviembre de 2024, la Defensoría del Pueblo tuvo conocimiento de un incidente en la región de la "Y", en La Paz, Cesar. Ante la ausencia de la fuerza pública y los constantes robos, un grupo de campesinos y dos yukpas actuaron por su cuenta y capturaron a dos hombres que, al parecer, esperaban para robar vehículos que transportan café. A los detenidos se les encontraron armas de fuego. El cabildo gobernador del resguardo El Rosario le solicitó a la Defensoría del Pueblo aclarar los hechos. La preocupación se debía a la información que circuló en los medios de comunicación, que señalaba que la guardia indígena había capturado a estas personas y las había entregado a la guerrilla. El cabildo desmintió esta versión y aseguró que la detención fue realizada por campesinos, y que los dos indígenas yukpas que participaron lo hicieron sin el consentimiento de las autoridades del resguardo. Es decir, la guardia indígena no estuvo involucrada.</p>
+                    </div>
+                </div>
+                <div class="timeline-year">2024</div>
+                <div class="timeline-icon"><i class="fas fa-users-cog"></i></div>
+            </div>
+
+            <!-- Evento 2025 -->
+            <div class="timeline-item" data-year="2025">
+                <div class="timeline-content">
+                    <h3 class="text-2xl font-bold text-blue-700">Nuevo Conflicto en El Once</h3>
+                    <p class="mt-2 text-gray-600">Los Yukpa atacan ganado de campesinos en una disputa por la propiedad de la tierra. La Defensoría del Pueblo interviene, pero el diálogo fracasa.</p>
+                    <div class="details">
+                        <p>Se informa de un nuevo conflicto en la vereda El Once, jurisdicción de Agustín Codazzi. El pasado 31 de mayo, un grupo de indígenas Yukpa atacó y hirió con armas corto punzantes un número indeterminado de cabezas de ganado, pertenecientes a la población campesina. El ataque se produjo porque los indígenas reclaman la propiedad de la tierra donde los campesinos estaban pastoreando el ganado. Los campesinos, por su parte, afirman que habían arrendado esas tierras a título personal a algunos yukpas, sin el conocimiento del cabildo gobernador del resguardo Iroka. La Defensoría del Pueblo intervino para mediar en el conflicto y organizó dos encuentros de acercamiento. Sin embargo, el segundo intento de diálogo fracasó, ya que solo se presentaron los representantes de la comunidad campesina.</p>
+                    </div>
+                </div>
+                <div class="timeline-year">2025</div>
+                <div class="timeline-icon"><i class="fas fa-cow"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white text-center py-6 mt-12 rounded-t-lg">
+        <p class="text-sm">
+            Elaborado por Ema Y. Molina Roys, Jose A. Gutierrez Contreras y Ana M. Ferrer para la profesora Adriana Salcedo
+        </p>
+        <p class="text-sm">
+            Department of Peace and Conflict Studies - University for Peace (UPEACE)
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.3
+            });
+
+            document.querySelectorAll('.timeline-item').forEach(event => {
+                observer.observe(event);
+                event.addEventListener('click', () => {
+                    event.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
