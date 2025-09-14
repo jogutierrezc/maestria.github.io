@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árbol de Conflictos en la Serranía del Perijá</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #334155;
+            overflow-x: hidden;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .conflict-tree-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tree-image {
+            width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .overlay-point {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            z-index: 2;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .overlay-point:hover {
+            transform: scale(1.1);
+        }
+
+        /* Posicionamiento de los puntos */
+        /* Tronco */
+        #trunk-point-1 {
+            top: 45%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #trunk-point-2 {
+            top: 55%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #trunk-point-3 {
+            top: 65%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Ramas (Efectos) */
+        #effects-point-1 {
+            top: 15%;
+            left: 15%;
+        }
+
+        #effects-point-2 {
+            top: 10%;
+            left: 40%;
+        }
+
+        #effects-point-3 {
+            top: 25%;
+            left: 70%;
+        }
+
+        #effects-point-4 {
+            top: 35%;
+            left: 25%;
+        }
+
+        #effects-point-5 {
+            top: 20%;
+            left: 55%;
+        }
+
+        /* Raíces (Causas) */
+        #causes-point-1 {
+            bottom: 5%;
+            left: 30%;
+        }
+
+        #causes-point-2 {
+            bottom: 10%;
+            left: 60%;
+        }
+        
+        .point-icon {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Estilos del Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            text-align: left;
+            position: relative;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close-button:hover {
+            color: #333;
+        }
+        
+        .modal-content h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .list-item {
+            list-style: none;
+            padding: 5px 0;
+            color: #1f2937;
+        }
+        
+        .list-item::before {
+            content: "•";
+            color: #3b82f6;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+    </style>
+</head>
+<body class="bg-white antialiased">
+    <div class="container mx-auto px-4 py-12">
+        <header class="text-center mb-16">
+            <h1 class="text-5xl font-extrabold text-blue-900 mb-4">Árbol de Conflictos en la Serranía del Perijá</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Haz clic en las frutas para ver las causas, el tronco y los efectos del conflicto.
+            </p>
+        </header>
+
+        <div class="conflict-tree-container">
+            <img src="https://tse3.mm.bing.net/th/id/OIP.qdw9NkqsUIszlOm-tZo46wHaGV?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Árbol de Conflictos" class="tree-image">
+
+            <!-- Puntos interactivos -->
+            <!-- Tronco -->
+            <div id="trunk-point-1" class="overlay-point" onclick="openModal('trunk-1')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#f87171" stroke="#be123c" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#fff" text-anchor="middle" font-weight="bold">1</text>
+                </svg>
+            </div>
+            
+            <div id="trunk-point-2" class="overlay-point" onclick="openModal('trunk-2')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#f87171" stroke="#be123c" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#fff" text-anchor="middle" font-weight="bold">2</text>
+                </svg>
+            </div>
+
+            <div id="trunk-point-3" class="overlay-point" onclick="openModal('trunk-3')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#f87171" stroke="#be123c" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#fff" text-anchor="middle" font-weight="bold">3</text>
+                </svg>
+            </div>
+
+            <!-- Causas -->
+            <div id="causes-point-1" class="overlay-point" onclick="openModal('causes-1')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#facc15" stroke="#a16207" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#a16207" text-anchor="middle" font-weight="bold">1</text>
+                </svg>
+            </div>
+
+            <div id="causes-point-2" class="overlay-point" onclick="openModal('causes-2')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#facc15" stroke="#a16207" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#a16207" text-anchor="middle" font-weight="bold">2</text>
+                </svg>
+            </div>
+            
+            <!-- Efectos -->
+            <div id="effects-point-1" class="overlay-point" onclick="openModal('effects-1')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#4ade80" stroke="#065f46" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#065f46" text-anchor="middle" font-weight="bold">1</text>
+                </svg>
+            </div>
+
+            <div id="effects-point-2" class="overlay-point" onclick="openModal('effects-2')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#4ade80" stroke="#065f46" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#065f46" text-anchor="middle" font-weight="bold">2</text>
+                </svg>
+            </div>
+
+            <div id="effects-point-3" class="overlay-point" onclick="openModal('effects-3')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#4ade80" stroke="#065f46" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#065f46" text-anchor="middle" font-weight="bold">3</text>
+                </svg>
+            </div>
+
+            <div id="effects-point-4" class="overlay-point" onclick="openModal('effects-4')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#4ade80" stroke="#065f46" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#065f46" text-anchor="middle" font-weight="bold">4</text>
+                </svg>
+            </div>
+
+            <div id="effects-point-5" class="overlay-point" onclick="openModal('effects-5')">
+                <svg viewBox="0 0 100 100" class="point-icon">
+                    <circle cx="50" cy="50" r="40" fill="#4ade80" stroke="#065f46" stroke-width="4" />
+                    <text x="50" y="55" font-family="Inter" font-size="28" fill="#065f46" text-anchor="middle" font-weight="bold">5</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="footer text-center mt-12 text-sm text-gray-500 bg-blue-900 text-white p-4 w-full">
+            <p>Elaborado por Ema Y. Molina Roys, Jose A. Gutierrez Contreras y Ana M. Ferrer</p>
+            <p>para la profesora Adriana Salcedo</p>
+            <p>Department of Peace and Conflict Studies - University for Peace (UPEACE)</p>
+        </div>
+    </div>
+
+    <!-- Modales para cada sección -->
+    <div id="modal-trunk-1" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('trunk-1')">&times;</span>
+            <h3>Tronco: El Problema de la Ineficiencia Estatal</h3>
+            <p>El conflicto principal es la falta de acción y el incumplimiento de las entidades del Estado. La ineficiencia del gobierno para garantizar los derechos territoriales y culturales de los pueblos indígenas y campesinos ha sido el motor que ha prolongado y agravado la situación, convirtiendo los desacuerdos en conflictos violentos.</p>
+        </div>
+    </div>
+
+    <div id="modal-trunk-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('trunk-2')">&times;</span>
+            <h3>Tronco: Las Disputas Territoriales</h3>
+            <p>Las disputas por la tierra son el centro del conflicto. La superposición de títulos de propiedad, la falta de delimitación de resguardos indígenas y la creación de Zonas de Reserva Campesina en territorios ancestrales han generado un polvorín de reclamos que se ha desbordado en violencia.</p>
+        </div>
+    </div>
+
+    <div id="modal-trunk-3" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('trunk-3')">&times;</span>
+            <h3>Tronco: Aspectos Culturales y Sociales</h3>
+            <p>El conflicto no es solo físico. La falta de respeto por los sitios sagrados de los Yukpa y la percepción de "colonización" por parte de las comunidades campesinas han erosionado la confianza y el tejido social. La lucha por la supervivencia y la identidad cultural se ha convertido en una parte fundamental del problema.</p>
+        </div>
+    </div>
+    
+    <div id="modal-causes-1" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('causes-1')">&times;</span>
+            <h3>Causas: Incumplimiento del Estado</h3>
+            <p>La falta de voluntad política y el incumplimiento de las entidades gubernamentales (como la ANT y el INCODER) en la compra de tierras, la reubicación de comunidades y la resolución de solicitudes territoriales han sido la raíz del problema. Esto ha dejado a las comunidades en un limbo jurídico y ha prolongado la crisis.</p>
+        </div>
+    </div>
+
+    <div id="modal-causes-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('causes-2')">&times;</span>
+            <h3>Causas: Superposición de Proyectos y Tensiones Culturales</h3>
+            <p>La creación de Zonas de Reserva Campesina (ZRC) y Zonas Veredales de Normalización (ZVNT) en territorios indígenas ha generado nuevos conflictos. A esto se suman las tensiones espirituales y culturales entre los pueblos indígenas, como la disputa entre los Yukpa y los Wiwa por la afectación de sus sitios sagrados.</p>
+        </div>
+    </div>
+    
+    <div id="modal-effects-1" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('effects-1')">&times;</span>
+            <h3>Efectos: Fragmentación y Crisis Humanitaria</h3>
+            <p>La falta de soluciones ha llevado a la fragmentación de comunidades, como la división del pueblo Wiwa. Esto también ha generado amenazas de desplazamiento forzado y una crisis humanitaria que ha requerido la intervención de las autoridades.</p>
+        </div>
+    </div>
+
+    <div id="modal-effects-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('effects-2')">&times;</span>
+            <h3>Efectos: Violencia y Muertes</h3>
+            <p>La tensión ha escalado a actos de violencia. Los envenenamientos de niños Yukpa y la agresión al ganado de campesinos son claros ejemplos de las consecuencias trágicas del conflicto sin resolver.</p>
+        </div>
+    </div>
+
+    <div id="modal-effects-3" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('effects-3')">&times;</span>
+            <h3>Efectos: Confrontación y Agresión</h3>
+            <p>La falta de diálogo y la desconfianza han provocado enfrentamientos directos entre las comunidades indígenas y campesinas, como el ataque al ganado y las agresiones físicas, lo que perpetúa el ciclo de violencia.</p>
+        </div>
+    </div>
+    
+    <div id="modal-effects-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('effects-4')">&times;</span>
+            <h3>Efectos: Desconfianza y Desinformación</h3>
+            <p>El incidente de 2024 en la "Y" evidencia la desconfianza hacia las instituciones y la facilidad con la que la desinformación puede agravar la situación, dificultando la resolución de problemas de manera pacífica.</p>
+        </div>
+    </div>
+
+    <div id="modal-effects-5" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('effects-5')">&times;</span>
+            <h3>Efectos: Limbo Jurídico</h3>
+            <p>La sentencia T-713, aunque busca solucionar un problema territorial, ha creado un "limbo jurídico" para las comunidades campesinas, ya que su derecho al territorio se ve obstaculizado mientras se resuelven las solicitudes de los pueblos indígenas, prolongando el conflicto.</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(part) {
+            const modal = document.getElementById('modal-' + part);
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(part) {
+            const modal = document.getElementById('modal-' + part);
+            modal.style.display = 'none';
+        }
+        
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
