@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Causas del Conflicto Arhuaco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .category-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .estructurales::before {
+            background: linear-gradient(90deg, #dc2626, #ef4444);
+        }
+        
+        .impulsores::before {
+            background: linear-gradient(90deg, #ea580c, #f97316);
+        }
+        
+        .desencadenantes::before {
+            background: linear-gradient(90deg, #ca8a04, #eab308);
+        }
+        
+        .manifestaciones::before {
+            background: linear-gradient(90deg, #7c3aed, #8b5cf6);
+        }
+        
+        .audio-controls {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #0ea5e9;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+        }
+        
+        .audio-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .audio-btn:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .audio-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .audio-progress {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .audio-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        
+        .example-box {
+            background: linear-gradient(135deg, #f0fff4, #dcfce7);
+            border: 1px solid #22c55e;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        
+        .reading-highlight {
+            background-color: #fef3c7 !important;
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+        
+        .voice-selector {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #374151;
+        }
+        
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .speed-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .speed-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+        
+        .timeline-item {
+            border-left: 3px solid #e2e8f0;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #3b82f6;
+        }
+        
+        .nav-link {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        
+        .nav-link:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        
+        .nav-link.active {
+            background: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-header shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-2">Análisis de Causas del Conflicto Arhuaco</h1>
+                <p class="text-xl opacity-90">Causas Estructurales y Factores Desencadenantes</p>
+                <p class="text-sm opacity-75 mt-2">Caso: Sentencia SU-419 de 2024 - Metodología ACCP</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-center space-x-6 py-4 flex-wrap">
+                <a href="contexto_conflicto_arhuaco.html" class="nav-link px-4 py-2 rounded-lg font-semibold transition-colors">
+                    📋 Contexto del Conflicto
+                </a>
+                <a href="mapa_conflicto_arhuaco.html" class="nav-link px-4 py-2 rounded-lg font-semibold transition-colors">
+                    🗺️ Mapa Interactivo
+                </a>
+                <a href="mapa_conflicto_arhuaco.html?page=actor-analysis" class="nav-link px-4 py-2 rounded-lg font-semibold transition-colors">
+                    📊 Análisis de Actores
+                </a>
+                <a href="analisis_causas_conflicto.html" class="nav-link active px-4 py-2 rounded-lg font-semibold transition-colors">
+                    🔍 Análisis de Causas
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Audio Controls -->
+    <div class="max-w-7xl mx-auto px-4 mt-6">
+        <div class="audio-controls">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <button id="playPauseBtn" class="audio-btn">
+                        <span id="playIcon">🔊</span>
+                        <span id="playText">Reproducir Página</span>
+                    </button>
+                    <button id="stopBtn" class="audio-btn" disabled>
+                        <span>⏹️</span>
+                        <span>Detener</span>
+                    </button>
+                </div>
+                
+                <div class="flex items-center gap-4 flex-wrap">
+                    <div class="speed-control">
+                        <span class="text-sm font-medium text-gray-700">Velocidad:</span>
+                        <button class="speed-btn" data-speed="0.75">0.75x</button>
+                        <button class="speed-btn active" data-speed="1">1x</button>
+                        <button class="speed-btn" data-speed="1.25">1.25x</button>
+                        <button class="speed-btn" data-speed="1.5">1.5x</button>
+                    </div>
+                    
+                    <select id="voiceSelect" class="voice-selector">
+                        <option value="">Voz por defecto</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="audio-progress">
+                <div id="progressBar" class="audio-progress-bar"></div>
+            </div>
+            
+            <div class="text-center">
+                <span id="statusText" class="text-sm text-gray-600">Listo para reproducir</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8" id="mainContent">
+        <!-- Introducción -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">📊 Marco Conceptual del Análisis</h2>
+            <div class="prose max-w-none">
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    El análisis de causas del conflicto Arhuaco se estructura según la metodología ACCP, 
+                    identificando cuatro niveles de análisis que permiten comprender la complejidad 
+                    y multicausalidad del conflicto de representación del pueblo Arhuaco.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    Esta metodología distingue entre factores de larga duración que crean condiciones 
+                    de conflictividad, elementos que intensifican tensiones, eventos específicos que 
+                    activan el conflicto y las formas concretas en que este se manifiesta.
+                </p>
+            </div>
+        </section>
+
+        <!-- Categorías del Análisis -->
+        <section class="grid gap-8 mb-8">
+            <!-- Causas Estructurales -->
+            <div class="category-card estructurales rounded-xl p-8">
+                <div class="text-center mb-6">
+                    <span class="category-icon">🏛️</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Causas Estructurales</h2>
+                    <p class="text-lg text-gray-600">Factores profundos y de larga duración</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Descripción</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Las causas estructurales son condiciones históricas, políticas, económicas y 
+                            sociales de largo plazo que crean un contexto propicio para el surgimiento de 
+                            conflictos. En el caso Arhuaco, estas causas se remontan a la tensión histórica 
+                            entre la autonomía indígena reconocida constitucionalmente y los mecanismos de 
+                            control administrativo del Estado colombiano.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Marco Normativo</h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            La Constitución de 1991 reconoce la autonomía indígena (Art. 246, 330), pero 
+                            no define claramente los límites entre esta autonomía y la intervención estatal 
+                            en asuntos internos. Esta ambigüedad normativa genera espacios de disputa sobre 
+                            competencias y procedimientos.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <h4 class="font-semibold text-green-800 mb-2">🌿 Ejemplo en el Caso Arhuaco</h4>
+                    <p class="text-green-700 text-sm leading-relaxed">
+                        <strong>Tensión histórica:</strong> Desde 1991, existe una contradicción entre el 
+                        reconocimiento constitucional de que los pueblos indígenas tienen derecho a 
+                        "gobernarse por autoridades propias" y la exigencia del Ministerio del Interior 
+                        de que estas decisiones se sujeten a procedimientos administrativos estatales. 
+                        Esta tensión se ha manifestado repetidamente en conflictos de representación de 
+                        diversos pueblos indígenas, no solo del pueblo Arhuaco.
+                    </p>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-semibold text-gray-800 mb-3">Factores Estructurales Identificados:</h4>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Ambigüedad Constitucional</h5>
+                            <p class="text-sm text-gray-600">Falta de delimitación precisa entre autonomía indígena y competencias estatales</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Burocratización de Derechos</h5>
+                            <p class="text-sm text-gray-600">Subordinación de decisiones autónomas a procedimientos administrativos</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Centralismo Institucional</h5>
+                            <p class="text-sm text-gray-600">Concentración de poder de reconocimiento en entidades del gobierno central</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Debilidad del Pluralismo Jurídico</h5>
+                            <p class="text-sm text-gray-600">Primacía del derecho estatal sobre sistemas normativos indígenas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impulsores de Conflicto -->
+            <div class="category-card impulsores rounded-xl p-8">
+                <div class="text-center mb-6">
+                    <span class="category-icon">⚡</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Impulsores de Conflicto</h2>
+                    <p class="text-lg text-gray-600">Elementos que intensifican las tensiones</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Descripción</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Los impulsores de conflicto son factores que, sobre la base de las causas 
+                            estructurales, intensifican las tensiones y hacen más probable el estallido 
+                            del conflicto. Actúan como catalizadores que agravan las condiciones existentes 
+                            y reducen las oportunidades de resolución pacífica.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Dinámicas Institucionales</h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            En el caso Arhuaco, los impulsores incluyen la resistencia institucional al 
+                            cumplimiento de órdenes judiciales, la politización de decisiones administrativas 
+                            y la falta de mecanismos efectivos de diálogo intercultural en la resolución 
+                            de disputas.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <h4 class="font-semibold text-green-800 mb-2">⚡ Ejemplo en el Caso Arhuaco</h4>
+                    <p class="text-green-700 text-sm leading-relaxed">
+                        <strong>Resistencia sistemática:</strong> El Ministerio del Interior ha desarrollado 
+                        una práctica de resistencia sistemática a reconocer decisiones autónomas de pueblos 
+                        indígenas cuando estas no se ajustan a sus criterios administrativos. En el caso 
+                        Arhuaco, esta resistencia se manifiesta en la negativa a registrar la decisión de 
+                        los 134 Mamos en Simonorwa, a pesar de ser la autoridad suprema reconocida 
+                        constitucionalmente.
+                    </p>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-semibold text-gray-800 mb-3">Impulsores Identificados:</h4>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Resistencia Institucional</h5>
+                            <p class="text-sm text-gray-600">Negativa sistemática del Ministerio a acatar decisiones judiciales y autónomas</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">División Interna</h5>
+                            <p class="text-sm text-gray-600">Sectores disidentes que cuestionan autoridades tradicionales</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Vacío de Representación</h5>
+                            <p class="text-sm text-gray-600">Prolongada ausencia de reconocimiento oficial genera incertidumbre</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Precedente Negativo</h5>
+                            <p class="text-sm text-gray-600">Señal a otros pueblos de que pueden ignorarse decisiones autónomas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Factores Desencadenantes -->
+            <div class="category-card desencadenantes rounded-xl p-8">
+                <div class="text-center mb-6">
+                    <span class="category-icon">🎯</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Factores Desencadenantes</h2>
+                    <p class="text-lg text-gray-600">Eventos específicos que activan el conflicto</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Descripción</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Los factores desencadenantes son eventos específicos, decisiones o acciones 
+                            concretas que, en un contexto de tensiones estructurales e impulsores activos, 
+                            precipitan la manifestación abierta del conflicto. Son los elementos que 
+                            transforman las tensiones latentes en conflicto activo.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Cronología Crítica</h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            En el caso Arhuaco, los factores desencadenantes incluyen la elección de 
+                            Zarwawiko Torres en 2020 durante la pandemia, la persistente negativa ministerial 
+                            de reconocimiento, y la decisión de los Mamos de convocar al encuentro de 
+                            Simonorwa para resolver definitivamente la representación.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <h4 class="font-semibold text-green-800 mb-2">🎯 Ejemplo en el Caso Arhuaco</h4>
+                    <p class="text-green-700 text-sm leading-relaxed">
+                        <strong>Encuentro de Simonorwa (Enero 2025):</strong> La decisión de los 134 Mamos 
+                        de ratificar transitoriamente a Zarwawiko Torres como representante legítimo constituye 
+                        el factor desencadenante más reciente. Este evento transformó una disputa administrativa 
+                        prolongada en una crisis constitucional abierta, al enfrentar directamente la autoridad 
+                        tradicional suprema con la resistencia institucional del Ministerio del Interior.
+                    </p>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-semibold text-gray-800 mb-3">Cronología de Factores Desencadenantes:</h4>
+                    <div class="space-y-4">
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">2020 - Elección durante COVID-19</h5>
+                            <p class="text-sm text-gray-600">Zarwawiko Torres es elegido Cabildo Gobernador en condiciones de emergencia sanitaria</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">2021-2024 - Negativa sistemática</h5>
+                            <p class="text-sm text-gray-600">El Ministerio mantiene resistencia al reconocimiento durante cuatro años</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">2024 - Sentencia SU-419</h5>
+                            <p class="text-sm text-gray-600">La Corte Constitucional ordena respetar decisiones autónomas del pueblo Arhuaco</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Enero 2025 - Encuentro de Simonorwa</h5>
+                            <p class="text-sm text-gray-600">134 Mamos ratifican transitoriamente a Zarwawiko, desafiando la resistencia ministerial</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manifestaciones -->
+            <div class="category-card manifestaciones rounded-xl p-8">
+                <div class="text-center mb-6">
+                    <span class="category-icon">🌊</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Manifestaciones</h2>
+                    <p class="text-lg text-gray-600">Formas concretas del conflicto</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Descripción</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Las manifestaciones son las formas concretas y observables en que se expresa 
+                            el conflicto una vez que ha sido activado por los factores desencadenantes. 
+                            Incluyen tanto las consecuencias directas como los efectos secundarios que 
+                            el conflicto genera en los actores y su entorno.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Impactos Múltiples</h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            En el caso Arhuaco, las manifestaciones incluyen la judicialización del conflicto, 
+                            el vacío de representación oficial, las tensiones internas comunitarias, y el 
+                            debilitamiento de la capacidad del pueblo para ejercer sus derechos colectivos 
+                            ante el Estado y terceros.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <h4 class="font-semibold text-green-800 mb-2">🌊 Ejemplo en el Caso Arhuaco</h4>
+                    <p class="text-green-700 text-sm leading-relaxed">
+                        <strong>Crisis de legitimidad institucional:</strong> El conflicto se manifiesta en 
+                        una crisis de legitimidad donde coexisten dos tipos de autoridad: la legitimidad 
+                        tradicional y constitucional de los Mamos que respaldan a Zarwawiko, versus la 
+                        negativa del reconocimiento administrativo por parte del Ministerio. Esta situación 
+                        genera incertidumbre jurídica y afecta la capacidad del pueblo Arhuaco para ejercer 
+                        sus derechos territoriales, de consulta previa y participación política.
+                    </p>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-semibold text-gray-800 mb-3">Manifestaciones Identificadas:</h4>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Judicialización</h5>
+                            <p class="text-sm text-gray-600">Necesidad de acudir a la Corte Constitucional para resolver disputas administrativas</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Vacío Representativo</h5>
+                            <p class="text-sm text-gray-600">Ausencia de representante oficialmente reconocido afecta ejercicio de derechos</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">División Comunitaria</h5>
+                            <p class="text-sm text-gray-600">Emergencia de sectores que cuestionan autoridades tradicionales</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Debilitamiento Institucional</h5>
+                            <p class="text-sm text-gray-600">Pérdida de efectividad en la gestión de asuntos colectivos</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Precedente Negativo</h5>
+                            <p class="text-sm text-gray-600">Riesgo de replicación en otros pueblos indígenas</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="font-medium text-gray-800">Crisis Constitucional</h5>
+                            <p class="text-sm text-gray-600">Confrontación entre autonomía indígena y autoridad administrativa</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Síntesis y Conclusiones -->
+        <section class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">🔍 Síntesis del Análisis Causal</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Interrelación de Factores</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        El conflicto Arhuaco ilustra cómo las causas estructurales (ambigüedad constitucional) 
+                        son activadas por impulsores específicos (resistencia institucional), precipitadas 
+                        por factores desencadenantes (encuentro de Simonorwa), y se manifiestan en crisis 
+                        institucionales complejas.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed">
+                        Esta multicausalidad requiere estrategias de resolución que aborden simultáneamente 
+                        todos los niveles, desde reformas normativas hasta mecanismos concretos de diálogo 
+                        y reconocimiento.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Implicaciones para la Resolución</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        La metodología ACCP sugiere que la resolución efectiva debe incluir: clarificación 
+                        normativa sobre autonomía indígena, cambios en prácticas institucionales del 
+                        Ministerio, fortalecimiento de autoridades tradicionales, y mecanismos de diálogo 
+                        intercultural.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed">
+                        Sin abordar las causas estructurales, las soluciones parciales solo postergarán 
+                        la reaparición del conflicto en nuevas manifestaciones.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+                <h4 class="font-semibold text-blue-800 mb-2">📚 Referencias Metodológicas</h4>
+                <div class="text-sm text-blue-700 space-y-1">
+                    <p>• Corte Constitucional. (2024). Sentencia SU-419 de 2024. M.P. José Fernando Reyes Cuartas.</p>
+                    <p>• Molina Roys, Gutierrez Jose y Ferrer Ana (2025). Análisis causal del conflicto Arhuaco.</p>
+                    <p>• Constitución Política de Colombia. (1991). Artículos 7, 246 y 330.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Variables globales para la funcionalidad de audio
+        let speechSynthesis = window.speechSynthesis;
+        let currentUtterance = null;
+        let isPlaying = false;
+        let isPaused = false;
+        let textSegments = [];
+        let currentSegmentIndex = 0;
+        let speechRate = 1;
+        let selectedVoice = null;
+
+        // Elementos del DOM
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const playIcon = document.getElementById('playIcon');
+        const playText = document.getElementById('playText');
+        const progressBar = document.getElementById('progressBar');
+        const statusText = document.getElementById('statusText');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const speedButtons = document.querySelectorAll('.speed-btn');
+
+        // Inicializar voces disponibles
+        function initializeVoices() {
+            const voices = speechSynthesis.getVoices();
+            voiceSelect.innerHTML = '<option value="">Voz por defecto</option>';
+            
+            voices.forEach((voice, index) => {
+                if (voice.lang.startsWith('es')) {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    voiceSelect.appendChild(option);
+                }
+            });
+        }
+
+        // Cargar voces cuando estén disponibles
+        speechSynthesis.onvoiceschanged = initializeVoices;
+        initializeVoices();
+
+        // Preparar texto para lectura
+        function prepareTextForReading() {
+            const mainContent = document.getElementById('mainContent');
+            const textElements = mainContent.querySelectorAll('h1, h2, h3, h4, h5, p, li');
+            textSegments = [];
+
+            textElements.forEach((element, index) => {
+                const text = element.textContent.trim();
+                if (text && text.length > 0) {
+                    textSegments.push({
+                        element: element,
+                        text: text,
+                        index: index
+                    });
+                }
+            });
+        }
+
+        // Reproducir segmento de texto
+        function speakSegment(segmentIndex) {
+            if (segmentIndex >= textSegments.length) {
+                stopReading();
+                return;
+            }
+
+            const segment = textSegments[segmentIndex];
+            currentUtterance = new SpeechSynthesisUtterance(segment.text);
+            
+            // Configurar voz
+            if (selectedVoice) {
+                currentUtterance.voice = speechSynthesis.getVoices()[selectedVoice];
+            }
+            
+            currentUtterance.rate = speechRate;
+            currentUtterance.pitch = 1;
+            currentUtterance.volume = 1;
+
+            // Resaltar elemento actual
+            removeAllHighlights();
+            segment.element.classList.add('reading-highlight');
+            segment.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Actualizar progreso
+            const progress = ((segmentIndex + 1) / textSegments.length) * 100;
+            progressBar.style.width = progress + '%';
+            statusText.textContent = `Leyendo: ${segmentIndex + 1} de ${textSegments.length}`;
+
+            // Eventos de la síntesis de voz
+            currentUtterance.onend = () => {
+                segment.element.classList.remove('reading-highlight');
+                currentSegmentIndex++;
+                if (currentSegmentIndex < textSegments.length && isPlaying) {
+                    setTimeout(() => speakSegment(currentSegmentIndex), 500);
+                } else {
+                    stopReading();
+                }
+            };
+
+            currentUtterance.onerror = (event) => {
+                console.error('Error en síntesis de voz:', event);
+                stopReading();
+            };
+
+            speechSynthesis.speak(currentUtterance);
+        }
+
+        // Iniciar/pausar reproducción
+        function togglePlayPause() {
+            if (!isPlaying && !isPaused) {
+                startReading();
+            } else if (isPlaying && !isPaused) {
+                pauseReading();
+            } else if (isPaused) {
+                resumeReading();
+            }
+        }
+
+        // Iniciar lectura
+        function startReading() {
+            prepareTextForReading();
+            if (textSegments.length === 0) {
+                statusText.textContent = 'No hay contenido para leer';
+                return;
+            }
+
+            isPlaying = true;
+            isPaused = false;
+            currentSegmentIndex = 0;
+            
+            updatePlayButton('pause');
+            stopBtn.disabled = false;
+            
+            speakSegment(currentSegmentIndex);
+        }
+
+        // Pausar lectura
+        function pauseReading() {
+            speechSynthesis.pause();
+            isPaused = true;
+            updatePlayButton('resume');
+            statusText.textContent = 'Pausado';
+        }
+
+        // Reanudar lectura
+        function resumeReading() {
+            speechSynthesis.resume();
+            isPaused = false;
+            updatePlayButton('pause');
+            statusText.textContent = `Leyendo: ${currentSegmentIndex + 1} de ${textSegments.length}`;
+        }
+
+        // Detener lectura
+        function stopReading() {
+            speechSynthesis.cancel();
+            isPlaying = false;
+            isPaused = false;
+            currentSegmentIndex = 0;
+            
+            updatePlayButton('play');
+            stopBtn.disabled = true;
+            progressBar.style.width = '0%';
+            statusText.textContent = 'Listo para reproducir';
+            
+            removeAllHighlights();
+        }
+
+        // Actualizar botón de reproducción
+        function updatePlayButton(state) {
+            switch(state) {
+                case 'play':
+                    playIcon.textContent = '🔊';
+                    playText.textContent = 'Reproducir Página';
+                    break;
+                case 'pause':
+                    playIcon.textContent = '⏸️';
+                    playText.textContent = 'Pausar';
+                    break;
+                case 'resume':
+                    playIcon.textContent = '▶️';
+                    playText.textContent = 'Continuar';
+                    break;
+            }
+        }
+
+        // Remover todos los resaltados
+        function removeAllHighlights() {
+            document.querySelectorAll('.reading-highlight').forEach(element => {
+                element.classList.remove('reading-highlight');
+            });
+        }
+
+        // Cambiar velocidad de reproducción
+        function changeSpeed(speed) {
+            speechRate = speed;
+            speedButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (isPlaying && currentUtterance) {
+                // Reiniciar con nueva velocidad
+                const wasPlaying = !isPaused;
+                stopReading();
+                if (wasPlaying) {
+                    setTimeout(startReading, 300);
+                }
+            }
+        }
+
+        // Cambiar voz
+        function changeVoice() {
+            const selectedIndex = voiceSelect.value;
+            selectedVoice = selectedIndex ? parseInt(selectedIndex) : null;
+            
+            if (isPlaying && currentUtterance) {
+                // Reiniciar con nueva voz
+                const wasPlaying = !isPaused;
+                stopReading();
+                if (wasPlaying) {
+                    setTimeout(startReading, 300);
+                }
+            }
+        }
+
+        // Event Listeners
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        stopBtn.addEventListener('click', stopReading);
+        voiceSelect.addEventListener('change', changeVoice);
+
+        speedButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const speed = parseFloat(e.target.dataset.speed);
+                changeSpeed(speed);
+            });
+        });
+
+        // Detener lectura al salir de la página
+        window.addEventListener('beforeunload', () => {
+            speechSynthesis.cancel();
+        });
+
+        // Pausar lectura si se pierde el foco de la página
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && isPlaying && !isPaused) {
+                pauseReading();
+            }
+        });
+    </script>
+</body>
+</html>
